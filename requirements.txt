@@ -5,3 +5,4 @@ plotly.express
 plotly
 python-dotenv
 flask
+pytest
