@@ -18,13 +18,35 @@ load_dotenv()
 
 API_KEY = os.getenv("ALPHAVANTAGE_API_KEY", default="demo")
 
-symbol = input("Enter a Stock Symbol: ")
-print("SYMBOL:", symbol)
+def fetch_stocks_json(symbol="MSFT"):
+
+    request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={symbol}&interval=15min&outputsize=full&apikey={API_KEY}"
+    response = requests.get(request_url)
+    parsed_response = json.loads(response.text)
+    tsd = parsed_response["Time Series (15min)"]
+
+    clean_data = []
+    for k,v in tsd.items():
+        record = {
+            "date": k,
+            "open": float(v["1. open"]),
+            "high": float(v["2. high"]),
+            "low": float(v["3. low"]),
+            "close": float(v["4. close"]),
+            "volume": float(v["5. volume"])
+        }
+        clean_data.append(record)
+
+    return clean_data
 
 # Data gathering
 
 if __name__ == "__main__":
 
+
+    symbol = input("Enter a Stock Symbol: ")
+    print("SYMBOL:", symbol)
+    
     request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={symbol}&interval=15min&outputsize=full&apikey={API_KEY}"
     
     response = requests.get(request_url)
