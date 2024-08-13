@@ -68,6 +68,32 @@ if __name__ == "__main__":
         }
         clean_data.append(record)
     
+    
+    def basic_change():
+        CHANGE_IN_PRICE_d = clean_data[0]['close'] - clean_data[1]['close']
+        CHANGE_IN_PRICE_p = (clean_data[0]['close'] - clean_data[1]['close']) / clean_data[1]['close'] * 100
+
+        CHANGE_IN_VOLUME_n = clean_data[0]['volume'] - clean_data[1]['volume']
+        CHANGE_IN_VOLUME_p = (clean_data[0]['volume'] - clean_data[1]['volume']) / clean_data[1]['volume'] * 100
+
+        print("-------------------------")
+        print("LATEST CLOSING PRICE:")
+        #print(data[0])
+        print(f"${clean_data[0]['close']}", "as of", clean_data[0]["date"])
+        print("-------------------------")
+        print("CHANGE IN PRICE:")
+        print(f"$: {CHANGE_IN_PRICE_d}")
+        print(f"%: {CHANGE_IN_PRICE_p}")
+        print("-------------------------")
+        print("LATEST VOLUME:")
+        #print(data[0])
+        print(f"{clean_data[0]['volume']}", "as of", clean_data[0]["date"])
+        print("-------------------------")
+        print("CHANGE IN VOLUME:")
+        print(f"AMT: {CHANGE_IN_VOLUME_n}")
+        print(f"%: {CHANGE_IN_VOLUME_p}")
+        print("-------------------------")
+
     # VWAP
     
     VWAP_url = f'https://www.alphavantage.co/query?function=VWAP&symbol={symbol}&interval=15min&apikey={API_KEY}'
@@ -142,6 +168,10 @@ if __name__ == "__main__":
         yaxis=dict(title='Price ($)'),
         )
     
-    fig.show()
+    print(fig.show())
+
+    print(basic_change())
+
+
 
 
